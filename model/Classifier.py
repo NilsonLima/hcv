@@ -8,7 +8,9 @@ class Classifier:
         self.y = y
         self.param_grid = param_grid
         self.cv = cv
+
         self.clf_class = None
+        self.best_params = None
 
         if (classifier_name == 'rfc'):
             self.clf_class = RandomForestClassifier
@@ -21,10 +23,12 @@ class Classifier:
         clf = self.clf_class(random_state=42, class_weight='balanced')
         cv_clf = GridSearchCV(cv=self.cv, param_grid=self.param_grid, estimator=clf, n_jobs=-1)
         cv_clf = cv_clf.fit(self.X, self.y)
-        return cv_clf.best_params_
+
+        self.best_params = cv_clf.best_params_
+        return
 
     def perform(self):
-        params = self.grid_search()
-        clf = self.clf_class(class_weight='balanced', **params)
+        self.grid_search()
+        clf = self.clf_class(class_weight='balanced', **self.best_params)
         clf = clf.fit(self.X, self.y)
         return clf
