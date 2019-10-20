@@ -1,6 +1,7 @@
 import pandas as pd
 from os import path
 from functools import reduce
+from pprint import pprint
 
 class Dataset:
     def __init__(self):
@@ -12,7 +13,10 @@ class Dataset:
         self.features = ['ptx3_0', 'ptx3_1', 'mbl', 'il_0', 'il_1', 'il_2', 'tnf', 'sod', 'mpo', 'il_3']
 
     def filter_df_by_targets(self, targets):
-        filter_condition = reduce(lambda x, y: (self.df[self.target] == x) | (self.df[self.target] == y), targets)
+        filter_condition = self.df[self.target] == targets[0]
+        for t in targets[1:]:
+            filter_condition |= self.df[self.target] == t
+
         return self.df[filter_condition]
 
     def get_X(self):
