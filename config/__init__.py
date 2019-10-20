@@ -8,7 +8,10 @@ class Config:
         full_path = path.join(prefix, 'config.json')
 
         with open(full_path) as file:
-            self.config = json.load(file)
+            self._config = json.load(file)
 
     def get_product(self):
-        return list(product(*self.config.values()))
+        return list(product(*self._config.values()))
+
+    def get_keys(self):
+        return self._config.keys()
