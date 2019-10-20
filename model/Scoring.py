@@ -14,3 +14,14 @@ class Scoring:
             f1_score(y_test, y_pred),
             confusion_matrix(y_test, y_pred)
         ]
+
+    @staticmethod
+    def get_score_names():
+        return [
+            'accuracy',
+            'precision',
+            'roc_auc',
+            'recall',
+            'f1',
+            'confusion_matrix'
+        ]
