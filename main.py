@@ -30,8 +30,9 @@ def main():
         y = dataset.extract_y(df)
 
         X = get_encoder(encoding).encode(X)
-        X = get_feature_reducer_and_transform(feature_reducer)(X, y)
         y = y.map(lambda x: 1 if x in target['positive'] else 0)
+
+        X = get_feature_reducer_and_transform(feature_reducer, X, y)
 
         data_split = Select(X, y, test_size)
         classifier = Classifier(
